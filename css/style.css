@@ -1,0 +1,465 @@
+/******* Google Fonts ******/
+
+/* DM Sans */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+/* Bricolag Grotesque */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+/******* CSS Variables ******/
+:root {
+    --c-neutral-900: hsl(243, 96%, 9%);
+    --c-neutral-800: hsl(243, 27%, 20%);
+    --c-neutral-700: hsl(243, 23%, 24%);
+    --c-neutral-600: hsl(243, 23%, 30%);
+    --c-neutral-300: hsl(240, 6%, 70%);
+    --c-neutral-200: hsl(250, 6%, 84%);
+    --c-neutral-0: hsl(0, 0%, 100%);
+    --c-orange-500: hsl(28, 100%, 52%);
+    --c-blue-500: hsl(233, 67%, 56%);
+    --c-blue-700: hsl(248, 70%, 36%);
+
+    --color-main-bg: var(--c-neutral-900);
+    --color-text-light: var(--c-neutral-0);
+    --color-text-med-light: var(--c-neutral-200);
+    --color-panel-bg-dark: var(--c-neutral-800);
+    --color-panel-bg-dark-hover: var(--c-neutral-700);
+    --color-panel-bg-med: var(--c-neutral-700);
+    --color-panel-bg-light: var(--c-neutral-600);
+    --color-panel-border: var(--c-neutral-600);
+    --color-button-bg: var(--c-blue-500);
+    --color-button-bg-hover: var(--c-blue-700);
+}
+
+body{
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    padding:1rem;
+    background-color: var(--color-main-bg);
+    color: var(--color-text-light);
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3{
+    font-family: "Bricolage Grotesque", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+
+header,
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-dropdown {
+    display:flex;
+    align-self: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+/* logo size */
+.logo-dropdown img{
+    width:9rem;
+    height:auto;
+}
+
+/* Dropdown universal style */
+.dropdown{
+    background-color: var(--color-panel-bg-dark);
+    color: var(--color-text-light);
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    border: 0;
+    font-size: var(--font-size-dropdown);
+    border-radius: 8px;
+}
+
+/* Header Dropdown */
+.header_dropdown{
+    max-width:8rem;
+    padding:1rem 2rem;
+    background-image: url(../assets/images/icon-units.svg);
+    background-repeat: no-repeat;
+    background-position: 0.75rem center;
+}
+
+/* Hero Title Heading */
+.hero_title{
+    text-align: center;
+    margin: 0 auto;
+    font-size: 3.5rem;
+    padding: 1rem;
+}
+
+/* Hero Search Container */
+.hero_search{
+    display: flex;
+    flex-direction: column;
+    padding-block: 1rem;
+}
+
+/* Hero Search Input Styles */
+.hero_search input,
+.hero_search button {
+    padding: 1rem;
+    border: none;
+    margin-bottom: 1rem;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    border-radius: 1rem;
+}
+
+/* Search bar input styling */
+.hero_search input {
+    font-size: 1.25rem;
+    color: var(--color-text-med-light);
+    background-color: var(--color-panel-bg-dark);
+    padding-left: 4.5rem;
+    background-image: url(../assets/images/icon-search.svg);
+    background-repeat: no-repeat;
+    background-position: 2rem center;
+    background-size: 1.5rem;
+}
+
+/* Search Bar focus */
+.hero_search input:focus{
+    outline: 0.10rem solid var(--color-text-med-light);
+}
+
+/* Search bar placeholder */
+.hero_search input::placeholder {
+    color: var(--c-neutral-300);
+}
+
+/* Search bar button styling */
+.hero_search button {
+    background-color: var(--color-button-bg);
+    color: var(--color-text-light);
+    font-size: 1.25rem;
+}
+
+/* Search bar button hover */
+.hero_search button:hover {
+    background-color: var(--color-button-bg-hover);
+    cursor: pointer;
+}
+
+/* DASHBOARD DISPLAY */
+.dashboard{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Current weather styling */
+
+/* Current weather header */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap; /* added line */
+    border: 0;
+}
+
+/* Current location weather */
+.current_weather{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    background-image: url('../assets/images/bg-today-small.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+    border-radius: 1rem;
+}
+
+/* Current location and date */
+.current_location{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.current .current_city{
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+}
+
+.current_date{
+    color: var(--color-text-med-light);
+}
+
+/* Icon and temperature */
+.current_info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: -2rem;
+}
+
+.current_temp {
+    font-size: 5rem;
+    font-style: italic;
+    font-weight: 600;
+    /* line-height: 1; */
+}
+
+.current_icon {
+    width: 6rem;
+    height: auto;
+}
+
+/* Current conditions */
+.current_conditions{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+/* Current condition item */
+.current_condition{
+    background-color: var(--color-panel-bg-dark);
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    padding: 1.5rem 1rem;
+    min-width: 5rem;
+}
+
+.current_condition-title{
+    font-size: 1.25rem;
+    color: var(--color-text-med-light);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
+.current_condition-value{
+    font-size: 2.25rem;
+    font-weight: 300;
+}
+
+/* Daily Forecast Container*/
+
+/* Heading */
+.section_title{
+    font-size: 1.35rem;
+}
+
+.daily_forecast{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+/* Daily Forecast Item Container */
+.daily_day{
+    background-color: var(--color-panel-bg-dark);
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.daily_day-icon{
+    width: 6rem;
+    height: auto;
+}
+
+.daily_day_temps{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* HOURLY FORECAST CONTAINER */
+
+.hourly_container{
+    padding: 1rem;
+    background-color: var(--color-panel-bg-dark);
+    border-radius: 1rem;
+    height: 60vh;
+    overflow-y: scroll;
+}
+
+/* Heading */
+.hourly_header{
+    display: flex;
+    margin: 0.5rem auto 1rem auto;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.hourly_select{
+    background-color: var(--color-panel-bg-med);
+    padding: 0.75rem;
+}
+
+.hourly_hours{
+    display:grid;
+    gap: 1rem;
+}
+
+/* Hourly forecast item container */
+.hourly_hour{
+    background-color: var(--color-panel-bg-med);
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+}
+
+.hourly_hour-icon{
+    width: 3.5rem;
+    height: auto;
+}
+
+.hourly_hour-time{
+    font-size: 1.25rem;
+    font-weight: 500;
+    flex: 1;
+}
+
+/* FOOTER */
+.attribution{
+    margin: 0 auto;
+    line-height: 1.25rem;
+    width:60%;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.attribution a{
+    color: var(--color-text-med-light);
+}
+
+/* TABLET LAYOUT STYLE */
+
+@media screen and (min-width:768px){
+    
+    /* Hero title */
+    .hero_title{
+        width:52%;
+    }
+    
+    /* Search bar */
+    .hero_search{
+        flex-direction: row;
+        gap:0.75rem;
+        margin-bottom: 0;
+    }
+
+    .hero_search input{
+        flex:1;
+    }
+
+    .hero_search button{
+        width: 9rem;
+    }
+
+    /* Current location styling */
+    .current_weather{
+        background-image: url('../assets/images/bg-today-large.svg');
+        padding: 5rem 2rem;
+        flex-direction: row;
+    }
+
+    .current_location{
+        text-align: left;
+        margin-right: auto;
+    }
+
+    .current_icon{
+        width: 8rem;
+    }
+
+    /* Current conditions container */
+    .current_conditions{
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* FOOTER */
+    .attribution{
+        width:30%;
+    }
+}
+
+/* Logo size for larger screens */
+@media screen and (min-width: 820px){
+    .logo-dropdown img{
+        width:12rem;
+    }
+}
+
+/* Desktop layout */
+@media screen and (min-width: 1024px){
+
+    /* Logo wrapper */
+    .logo-dropdown{
+        padding-inline: 0;
+    }
+
+    .logo-dropdown img{
+        width:14rem;
+    }
+
+    /* Hero Title */
+    .hero_title{
+        font-size: 4rem;
+        width: 100%;
+        margin: 2rem auto;
+    }
+
+    /* Search Bar Wrapper */
+    .hero_search{
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    /* Weather Dashboard */
+    .dashboard{
+        grid-template-columns: repeat(3, 1fr);
+        gap:2rem 2rem;
+        grid-template-areas:
+            "current current hourly"
+            "daily daily hourly";
+    }
+
+    .current{
+        grid-area: current;
+    }
+
+    .daily{
+        grid-area: daily;
+    }
+
+    .hourly{
+        grid-area: hourly;
+        position: relative;
+    }
+
+    .hourly_container{
+         min-height: -webkit-fill-available;
+    }
+
+    /* FOOTER */
+    .attribution{
+        width:25%;
+    }
+}

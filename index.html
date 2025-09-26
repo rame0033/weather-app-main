@@ -1,66 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
+
   <title>Frontend Mentor | Weather app</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <!-- RESET STYLESHEET -->
+  <link rel="stylesheet" href="./css/reset.css">
+
+  <!-- MAIN STYLESHEET -->
+  <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
-  Units
+  <header>
+    <div class="logo-dropdown">
+      <img src="./assets/images/logo.svg" alt="Weather App Logo">
 
-  Switch to Imperial/Metric
+      <select class="dropdown header_dropdown" name="Units" id="units">
+        <option value="">Units</option>
+        <option value="C">&deg;F</option>
+        <option value="F">&deg;C</option>
+      </select>
 
-  Temperature
+      <!-- Units
+      
+      Switch to Imperial/Metric
+      
+      Temperature
+      
+      Celsius (°C)
+      Fahrenheit (°F)
+      
+      Wind Speed
+      
+      km/h
+      mph
+      
+      Precipitation
+      
+      Millimeters (mm)
+      Inches (in) -->
+    </div>
+  </header>
 
-  Celsius (°C)
-  Fahrenheit (°F)
+  <main id="main">
 
-  Wind Speed
+    <section class="hero">
+      <h1 class="hero_title">How's the sky looking today?</h1>
 
-  km/h
-  mph
+      <div class="hero_search">
+        <input class="hero_textbox" type="text" name="search" id="search" placeholder="Search for a place..." aria-label="Search for a place">
+        <button type="submit" id="hero-btn">Search</button>
+      </div>
+    </section>
 
-  Precipitation
+    <div class="dashboard">
 
-  Millimeters (mm)
-  Inches (in)
+      <section class="current">
+        <h2 class="visually-hidden">Current Weather</h2>
 
-  How's the sky looking today?
+        <div class="current_weather">
 
-  Search for a city, e.g., New York
-  Search
+          <div class="current_location">
+            <div class="current_city">Berlin, Germany</div>
+            <div class="current_date">Tuesday, Sep 20, 2025</div>
+          </div>
 
-  Feels like
-  <!-- Insert temperature here -->
+          <div class="current_info">
 
-  Humidity
-  <!-- Insert humidity here -->
+            <img src="./assets/images/icon-sunny.webp" class="current_icon" alt="">
+            <div class="current_temp"><span>20</span>&deg;</div>
 
-  Wind
-  <!-- Insert wind here -->   
-  
-  Precipitation
-  <!-- Insert precipitation here -->
+          </div>
 
-  Daily forecast
-  <!-- Insert daily forecast for the next 7 days here -->
+        </div>
 
-  Hourly forecast
-  <!-- Insert hourly forecast for the selected day here -->
+        <div class="current_conditions">
+          <div class="current_condition">
+            <p class="current_condition-title">Feels Like</p>
+            <p id="feelsLike" class="current_condition-value">18&deg;</p>
+          </div>
 
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+          <div class="current_condition">
+            <p class="current_condition-title">Humidity</p>
+            <p id="humidity" class="current_condition-value">46%</p>
+          </div>
+
+          <div class="current_condition">
+            <p class="current_condition-title">Wind</p>
+            <p id="wind" class="current_condition-value">14 km/h</p>
+          </div>
+
+          <div class="current_condition">
+            <p class="current_condition-title">Precipitation</p>
+            <p id="precipitation" class="current_condition-value">0 mm</p>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="daily">
+        <h2 class="section_title daily_title">Daily forecast</h2>
+
+        <div class="daily_forecast">
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+          <div class="daily_day">
+
+            <p class="day-title">Tue</p>
+            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
+
+            <div class="daily_day_temps">
+              <p class="daily_day_high">20&deg;</p>
+              <p class="daily_day_low">15&deg;</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+      </section>
+
+      <section class="hourly">
+
+        <div class="hourly_container">
+
+          <div class="hourly_header">
+            <h2 class="section_title hourly_title">Hourly forecast</h2>
+            <select class="dropdown hourly_select" name="hourly-day">
+              <option value="">Sunday</option>
+              <option value="">Monday</option>
+              <option value="">Tuesday</option>
+              <option value="">Wednesday</option>
+              <option value="">Thursday</option>
+              <option value="">Friday</option>
+              <option value="">Saturday</option>
+            </select>
+          </div>
+
+          <div class="hourly_hours">
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+            <div class="hourly_hour">
+              <img src="./assets/images/icon-sunny.webp" class="hourly_hour-icon" alt="">
+              <p class="hourly_hour-time">3 PM</p>
+              <p class="hourly_hour-temp">20&deg;</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        
+      </section>
+    </div>
+
+  </main>
+
+
+  <footer class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.<br>
+    Coded by <a href="https://github.com/rame0033/">Gian Ramelb</a>.
+  </footer>
 </body>
+
 </html>
