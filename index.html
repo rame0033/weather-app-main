@@ -15,6 +15,8 @@
 
   <!-- MAIN STYLESHEET -->
   <link rel="stylesheet" href="./css/style.css">
+
+  <script src="./script.js" defer></script>
 </head>
 
 <body>
@@ -23,10 +25,10 @@
     <div class="logo-dropdown">
       <img src="./assets/images/logo.svg" alt="Weather App Logo">
 
-      <select class="dropdown header_dropdown" name="Units" id="units">
+      <select class="dropdown header_dropdown" name="Units" id="ddlUnits">
         <option value="">Units</option>
-        <option value="C">&deg;F</option>
-        <option value="F">&deg;C</option>
+        <option value="C">Celsius</option>
+        <option value="F">Fahrenheit</option>
       </select>
 
       <!-- Units
@@ -69,14 +71,14 @@
         <div class="current_weather">
 
           <div class="current_location">
-            <div class="current_city">Berlin, Germany</div>
-            <div class="current_date">Tuesday, Sep 20, 2025</div>
+            <div id="dvCityCountry" class="current_city">Berlin, Germany</div>
+            <div id="dvCurrDate" class="current_date">Tuesday, Sep 20, 2025</div>
           </div>
 
           <div class="current_info">
 
             <img src="./assets/images/icon-sunny.webp" class="current_icon" alt="">
-            <div class="current_temp"><span>20</span>&deg;</div>
+            <div class="current_temp"><span id="dvCurrTemp"></span>&deg;</div>
 
           </div>
 
@@ -85,22 +87,22 @@
         <div class="current_conditions">
           <div class="current_condition">
             <p class="current_condition-title">Feels Like</p>
-            <p id="feelsLike" class="current_condition-value">18&deg;</p>
+            <p class="current_condition-value"><span id="pFeelsLike"></span>&deg;</p>
           </div>
 
           <div class="current_condition">
             <p class="current_condition-title">Humidity</p>
-            <p id="humidity" class="current_condition-value">46%</p>
+            <p class="current_condition-value"><span id="pHumidity"></span>%</p>
           </div>
 
           <div class="current_condition">
             <p class="current_condition-title">Wind</p>
-            <p id="wind" class="current_condition-value">14 km/h</p>
+            <p class="current_condition-value"><span id="pWind"></span></p>
           </div>
 
           <div class="current_condition">
             <p class="current_condition-title">Precipitation</p>
-            <p id="precipitation" class="current_condition-value">0 mm</p>
+            <p class="current_condition-value"><span id="pPrecipitation"></span></p>
           </div>
         </div>
 
@@ -111,89 +113,25 @@
 
         <div class="daily_forecast">
 
-          <div class="daily_day">
+          <div id="dvForecastDay1" class="block daily_day">
 
-            <p class="day-title">Tue</p>
+            <p class="daily_day-title">Tue</p>
             <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
 
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
+            <div class="daily_day-temps">
+              <p class="daily_day-high">20&deg;</p>
+              <p class="daily_day-low">15&deg;</p>
             </div>
 
           </div>
 
-          <div class="daily_day">
-
-            <p class="day-title">Tue</p>
-            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
-
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
-            </div>
-
-          </div>
-
-          <div class="daily_day">
-
-            <p class="day-title">Tue</p>
-            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
-
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
-            </div>
-
-          </div>
-
-          <div class="daily_day">
-
-            <p class="day-title">Tue</p>
-            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
-
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
-            </div>
-
-          </div>
-
-          <div class="daily_day">
-
-            <p class="day-title">Tue</p>
-            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
-
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
-            </div>
-
-          </div>
-
-          <div class="daily_day">
-
-            <p class="day-title">Tue</p>
-            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
-
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
-            </div>
-
-          </div>
-
-          <div class="daily_day">
-
-            <p class="day-title">Tue</p>
-            <img src="./assets/images/icon-sunny.webp" class="daily_day-icon" alt="">
-
-            <div class="daily_day_temps">
-              <p class="daily_day_high">20&deg;</p>
-              <p class="daily_day_low">15&deg;</p>
-            </div>
-
-          </div>
+          <div id="dvForecastDay2" class="block daily_day"></div>
+          <div id="dvForecastDay3" class="block daily_day"></div>
+          <div id="dvForecastDay4" class="block daily_day"></div>
+          <div id="dvForecastDay5" class="block daily_day"></div>
+          <div id="dvForecastDay6" class="block daily_day"></div>
+          <div id="dvForecastDay7" class="block daily_day"></div>
+          
 
         </div>
 
