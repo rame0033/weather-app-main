@@ -52,14 +52,14 @@ function loadLocationData(locationData){
   cityName = location.city;
   countryName = location.country_code.toUpperCase();
   
-  let dateOptions = {
+    let dateOptions = {
     year: "numeric",
     month: "short",
     day: "numeric",
     weekday: "long",
   };
-  
-  let date = new Intl.DateTimeFormat("en-US",dateOptions).format(new Date());
+
+  let date =  new Intl.DateTimeFormat("en-US",dateOptions).format(new Date());
   
   console.log(cityName, countryName);
 
@@ -87,7 +87,7 @@ async function getWeatherData(lat, lon) {
   // wind_speed_unit= mph or kmh
   // precipitation_unit = inch or mm
   
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,precipitation,wind_speed_10m&wind_speed_unit=${windUnit}&temperature_unit=${tempUnit}&precipitation_unit=${precipUnit}`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,precipitation,wind_speed_10m&wind_speed_unit=${windUnit}&temperature_unit=${tempUnit}&precipitation_unit=${precipUnit}&timezone=auto`;
 
   try {
     const response = await fetch(url);
@@ -98,13 +98,14 @@ async function getWeatherData(lat, lon) {
     const result = await response.json();
     console.log(result);
 
-    loadWeatherData(result);
+    loadCurrentWeather(result);
+    loadDailyForecast(result)
   } catch (error) {
     console.error(error.message);
   }
 }
 
-function loadWeatherData(weather){
+function loadCurrentWeather(weather){
   dvCurrTemp.textContent = Math.round(weather.current.temperature_2m);
   pFeelsLike.textContent = Math.round(weather.current.apparent_temperature);
   pHumidity.textContent = weather.current.relative_humidity_2m;
@@ -112,7 +113,61 @@ function loadWeatherData(weather){
   pPrecipitation.textContent = `${weather.current.precipitation} ${weather.current_units.precipitation}`;
 }
 
-function getWeatherFileName(code){
+function loadDailyForecast(weather){
+  let daily = weather.daily;
+
+  for (let i=0 ; i < 7; i++){
+    const day = new Date(`${daily.time[i]}T00:00:00Z`);
+    const dayOfWeek = new Intl.DateTimeFormat("en-US", {
+      weekday: "short",
+      timeZone: "UTC",
+    }).format(day);
+
+    // let dayOfWeek = new Intl.DateTimeFormat("en-US", {weekday: "short"}).format(day);
+    let dvForecastday = document.querySelector(`#dvForecastDay${i+1}`);
+    let weatherCodeName = getWeatherCodeName(daily.weather_code[i]);
+
+    let dailyHigh = Math.round(daily.temperature_2m_max[i])+"°";
+    let dailyLow = Math.round(daily.temperature_2m_min[i])+ "°";
+
+    // Clear previous content of the div
+    while (dvForecastday.firstChild){
+      dvForecastday.removeChild(dvForecastday.firstChild);
+    }
+
+    //Add day of the week to daily forecast
+    addDailyElement("p", "daily_day-title", dayOfWeek, "", dvForecastday, "afterbegin");
+
+    addDailyElement("img", "daily_day-icon", "",weatherCodeName,  dvForecastday,"beforeend");
+
+    addDailyElement("div", "daily_day-temps", "", "", dvForecastday, "beforeend");
+    let dvDailyTemps = dvForecastday.querySelector(`#dvForecastDay${i+1} .daily_day-temps`);
+    addDailyElement("p", "daily_day-high", dailyHigh, "", dvDailyTemps, "afterbegin");
+    addDailyElement("p", "daily_day-low", dailyLow, "", dvDailyTemps, "beforeend");
+   
+    console.log(dayOfWeek);
+  }
+}
+
+function addDailyElement( tag, className, content, weatherCodeName, parentElement, position) {
+    const newElement = document.createElement(tag);
+    newElement.setAttribute("class", className);
+
+    if (content !== ""){
+      const newContent = document.createTextNode(content);
+      newElement.appendChild(newContent);
+    }
+    if (tag === "img"){
+      newElement.setAttribute("src", `/assets/images/icon-${weatherCodeName}.webp`);
+      newElement.setAttribute("alt", weatherCodeName);
+      newElement.setAttribute("width", "320");
+      newElement.setAttribute("height", "320");
+    }
+
+    parentElement.insertAdjacentElement(position, newElement);
+}
+
+function getWeatherCodeName(code){
 
   const weatherCodes = {
     0: "sunny",
@@ -146,13 +201,12 @@ function getWeatherFileName(code){
 
   };
 
-  let fileName = `icon-${weatherCodes[code]}.webp`
-
-  return fileName;
+  
+  return weatherCodes[code];
 
   return weatherCodes[code]
 }
 
 // getWeatherData();
 
-console.log(getWeatherFileName(57));
+console.log(getWeatherCodeName(57));
