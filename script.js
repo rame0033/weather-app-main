@@ -32,7 +32,6 @@ async function getGeoData() {
     }
 
     const result = await response.json();
-    console.log(result);
 
     if (result.length === 0) {
       throw new Error("No location found");
@@ -89,12 +88,9 @@ function loadLocationData(locationData){
 
   let currDate =  new Intl.DateTimeFormat("en-US",dateOptions).format(new Date());
   
-  console.log(cityName, countryName);
 
   dvCityCountry.textContent = `${cityName}, ${countryName}`;
   dvCurrDate.textContent = currDate;
-
-  console.log(currDate);
 } 
 
 async function getWeatherData(lat, lon) {
@@ -118,7 +114,6 @@ async function getWeatherData(lat, lon) {
     }
 
     const weatherData = await response.json();
-    console.log(weatherData);
 
     // Store the response for the day selector's change handler.
     latestWeatherData = weatherData;
@@ -206,7 +201,6 @@ function loadHourlyForecast(weather){
       let weatherCodeName = getWeatherCodeName(weatherCodes[forecastHour]);
       let temp = Math.round(temps[forecastHour]) + "°";
       let hour = new Date(hours[forecastHour]).toLocaleString('en-US', {hour: 'numeric', hour12:true});
-      console.log(hour, weatherCodeName, temp);
 
       let dvForecastHour = document.querySelector(`#dvForecastHour${h + 1}`);
       // Replace the previous day's content instead of appending duplicates.
@@ -257,10 +251,6 @@ function getWeatherCodeName(code){
   
   return weatherCodes[code];
 }
-
-// getWeatherData();
-
-console.log(getWeatherCodeName(57));
 
 populateDayOfWeek();
 
