@@ -1,5 +1,7 @@
 const ddlUnits = document.querySelector("#ddlUnits");
-const ddlDay = document.querySelector("#ddlDay")
+const ddlDay = document.querySelector("#ddlDay");
+const btnSearch = document.querySelector("#btn-search");
+const txtSearch = document.querySelector("#txtSearch")
 const dvCityCountry = document.querySelector("#dvCityCountry");
 const dvCurrDate = document.querySelector("#dvCurrDate");
 const dvCurrTemp = document.querySelector("#dvCurrTemp");
@@ -19,7 +21,7 @@ ddlUnits.addEventListener("change", () => {
 });
 
 async function getGeoData() {
-  let search = "Ottawa, ON";
+  let search = txtSearch.value;
   
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(search)}&format=jsonv2&addressdetails=1&limit=1`;
 
@@ -71,7 +73,7 @@ function populateDayOfWeek(){
   }
 }
 
-getGeoData();
+// getGeoData();
 
 function loadLocationData(locationData){
   let location = locationData[0].address;
@@ -218,12 +220,6 @@ function loadHourlyForecast(weather){
   
 }
 
-function getHours(){
-  for (let h = 0; h <= 23; h++){
-      // console.log(h);
-      
-    }
-}
 
 function getWeatherCodeName(code){
 
@@ -267,6 +263,9 @@ function getWeatherCodeName(code){
 console.log(getWeatherCodeName(57));
 
 populateDayOfWeek();
+
+// Get weather for the searched location
+btnSearch.addEventListener("click", getGeoData);
 
 ddlDay.addEventListener("change", () => {
   if (latestWeatherData) {
