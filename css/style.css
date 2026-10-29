@@ -79,7 +79,7 @@ main {
 
 /* Header Dropdown */
 .header_dropdown{
-    max-width:8rem;
+    max-width:fit-content;
     padding:1rem 2rem;
     background-image: url(../assets/images/icon-units.svg);
     background-repeat: no-repeat;
