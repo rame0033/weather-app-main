@@ -1,4 +1,5 @@
 const ddlUnits = document.querySelector("#ddlUnits");
+const ddlDay = document.querySelector("#ddlDay")
 const dvCityCountry = document.querySelector("#dvCityCountry");
 const dvCurrDate = document.querySelector("#dvCurrDate");
 const dvCurrTemp = document.querySelector("#dvCurrTemp");
@@ -8,6 +9,8 @@ const pWind = document.querySelector("#pWind");
 const pPrecipitation = document.querySelector("#pPrecipitation");
 
 let coordinates;
+// Keep the API response available when the day selector changes.
+let latestWeatherData;
 
 ddlUnits.addEventListener("change", () => {
   if (coordinates) {
@@ -45,6 +48,29 @@ async function getGeoData() {
   }
 }
 
+function populateDayOfWeek(){
+
+  // loop to populate day options
+  let currDate = new Date();
+  let currDay;
+
+  for(i=0; i < 7; i++){
+
+    currDay = new Intl.DateTimeFormat("en-US", {weekday: "long"}).format(currDate);
+    const newOption = document.createElement("option");
+    const dayOfWeek = document.createTextNode(currDay);
+
+    newOption.setAttribute("class", "hourly_select-day");
+    newOption.setAttribute("value", i);
+    newOption.appendChild(dayOfWeek);
+  
+    ddlDay.insertAdjacentElement("beforeend", newOption);
+
+    currDate.setDate(currDate.getDate() + 1);
+
+  }
+}
+
 getGeoData();
 
 function loadLocationData(locationData){
@@ -59,18 +85,17 @@ function loadLocationData(locationData){
     weekday: "long",
   };
 
-  let date =  new Intl.DateTimeFormat("en-US",dateOptions).format(new Date());
+  let currDate =  new Intl.DateTimeFormat("en-US",dateOptions).format(new Date());
   
   console.log(cityName, countryName);
 
   dvCityCountry.textContent = `${cityName}, ${countryName}`;
-  dvCurrDate.textContent = date;
+  dvCurrDate.textContent = currDate;
 
-  console.log(date);
+  console.log(currDate);
 } 
 
 async function getWeatherData(lat, lon) {
-  // if toggle value = F
 
   let tempUnit= "celsius";
   let windUnit = "kmh";
@@ -81,13 +106,8 @@ async function getWeatherData(lat, lon) {
      windUnit = "mph";
      precipUnit = "inch";
   }
-  // else
-
-  // temperature_unit=fahrenheit OR celsius 
-  // wind_speed_unit= mph or kmh
-  // precipitation_unit = inch or mm
   
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m,dew_point_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,precipitation,wind_speed_10m&wind_speed_unit=${windUnit}&temperature_unit=${tempUnit}&precipitation_unit=${precipUnit}&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=weather_code,temperature_2m,relative_humidity_2m,dew_point_2m&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,precipitation,wind_speed_10m&wind_speed_unit=${windUnit}&temperature_unit=${tempUnit}&precipitation_unit=${precipUnit}&timezone=auto`;
 
   try {
     const response = await fetch(url);
@@ -95,11 +115,14 @@ async function getWeatherData(lat, lon) {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const result = await response.json();
-    console.log(result);
+    const weatherData = await response.json();
+    console.log(weatherData);
 
-    loadCurrentWeather(result);
-    loadDailyForecast(result)
+    // Store the response for the day selector's change handler.
+    latestWeatherData = weatherData;
+    loadCurrentWeather(weatherData);
+    loadDailyForecast(weatherData);
+    loadHourlyForecast (weatherData);
   } catch (error) {
     console.error(error.message);
   }
@@ -123,7 +146,6 @@ function loadDailyForecast(weather){
       timeZone: "UTC",
     }).format(day);
 
-    // let dayOfWeek = new Intl.DateTimeFormat("en-US", {weekday: "short"}).format(day);
     let dvForecastday = document.querySelector(`#dvForecastDay${i+1}`);
     let weatherCodeName = getWeatherCodeName(daily.weather_code[i]);
 
@@ -144,8 +166,6 @@ function loadDailyForecast(weather){
     let dvDailyTemps = dvForecastday.querySelector(`#dvForecastDay${i+1} .daily_day-temps`);
     addDailyElement("p", "daily_day-high", dailyHigh, "", dvDailyTemps, "afterbegin");
     addDailyElement("p", "daily_day-low", dailyLow, "", dvDailyTemps, "beforeend");
-   
-    console.log(dayOfWeek);
   }
 }
 
@@ -165,6 +185,44 @@ function addDailyElement( tag, className, content, weatherCodeName, parentElemen
     }
 
     parentElement.insertAdjacentElement(position, newElement);
+}
+
+function loadHourlyForecast(weather){
+
+  let dayIndex = Number(ddlDay.value);
+    let weatherCodes = weather.hourly.weather_code;
+    let temps = weather.hourly.temperature_2m;
+    let hours = weather.hourly.time;
+
+    for (let h = 0; h < 24; h++){
+      // Read the selected day's hour while reusing the 24 forecast display slots.
+      const forecastHour = dayIndex * 24 + h;
+      if (forecastHour >= hours.length) {
+        break;
+      }
+
+      let weatherCodeName = getWeatherCodeName(weatherCodes[forecastHour]);
+      let temp = Math.round(temps[forecastHour]) + "°";
+      let hour = new Date(hours[forecastHour]).toLocaleString('en-US', {hour: 'numeric', hour12:true});
+      console.log(hour, weatherCodeName, temp);
+
+      let dvForecastHour = document.querySelector(`#dvForecastHour${h + 1}`);
+      // Replace the previous day's content instead of appending duplicates.
+      dvForecastHour.replaceChildren();
+
+      addDailyElement("img", "hourly_hour-icon", "",weatherCodeName,  dvForecastHour,"afterbegin");
+      addDailyElement("p", "hourly_hour-time", hour, "", dvForecastHour, "beforeend");
+      addDailyElement("p", "hourly_hour-temp", temp, "", dvForecastHour, "beforeend");
+
+    }
+  
+}
+
+function getHours(){
+  for (let h = 0; h <= 23; h++){
+      // console.log(h);
+      
+    }
 }
 
 function getWeatherCodeName(code){
@@ -200,13 +258,19 @@ function getWeatherCodeName(code){
     99: "storm",
 
   };
-
   
   return weatherCodes[code];
-
-  return weatherCodes[code]
 }
 
 // getWeatherData();
 
 console.log(getWeatherCodeName(57));
+
+populateDayOfWeek();
+
+ddlDay.addEventListener("change", () => {
+  if (latestWeatherData) {
+    // Pass weather data explicitly; the event object is not forecast data.
+    loadHourlyForecast(latestWeatherData);
+  }
+});
